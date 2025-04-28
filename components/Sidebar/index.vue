@@ -1,6 +1,6 @@
 <script setup>
 const open = ref(true);
-const name = "ricky-firmansyah.site"
+const name = "ricky-firmansyah.site";
 </script>
 
 <template>
@@ -20,7 +20,9 @@ const name = "ricky-firmansyah.site"
       <div class="p-4">
         <div class="flex items-center gap-2 text-black cursor-pointer hover:bg-neutral-50 rounded p-2">
           <div class="bg-green-300 h-10 w-10 rounded-full flex items-center justify-center font-bold text-white">{{ name[0] }}</div>
-          <p class="text-black text-sm font-bold">{{ name }}</p>
+          <a href="https://ricky-firmansyah.site" target="_blank" class="text-black text-sm font-bold hover:underline">
+            {{ name }}
+          </a>
         </div>
       </div>
     </div>
