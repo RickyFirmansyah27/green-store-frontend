@@ -63,9 +63,7 @@ const resetFilters = () => {
       </div>
     </header>
 
-    <!-- Filters -->
     <div class="flex gap-4 items-center">
-      <!-- Filter by Region -->
       <DropdownMenu>
         <DropdownMenuTrigger class="border p-2 rounded cursor-pointer">
           {{ selectedRegion || "Filter by Region" }}
@@ -83,7 +81,6 @@ const resetFilters = () => {
         </DropdownMenuContent>
       </DropdownMenu>
 
-      <!-- Filter by Role -->
       <DropdownMenu>
         <DropdownMenuTrigger class="border p-2 rounded cursor-pointer">
           {{ selectedRole || "Filter by Role" }}
@@ -101,7 +98,6 @@ const resetFilters = () => {
         </DropdownMenuContent>
       </DropdownMenu>
 
-      <!-- Reset Button -->
       <button
         class="ml-auto flex items-center gap-2 border p-2 rounded bg-gray-100 hover:bg-gray-200"
         @click="resetFilters"
@@ -111,7 +107,6 @@ const resetFilters = () => {
       </button>
     </div>
 
-    <!-- Tampilkan status loading, error, atau tabel data -->
     <div v-if="isLoading">Loading...</div>
     <div v-else-if="isError">Error: {{ error }}</div>
     <DataTable v-else :columns="columns" :data="data" />
