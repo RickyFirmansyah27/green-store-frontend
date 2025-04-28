@@ -1,18 +1,16 @@
 <script setup lang="ts">
-import { ref, computed, watchEffect } from "vue";
+import { ref, computed, watch } from "vue";
 import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator } from '@/components/ui/dropdown-menu';
 import { useGetSalesReps } from "@/lib/transaction-service";
 import { get, pickBy } from "lodash";
 import { column_data_sales_transaction } from "./constant";
 
-// Reactive properties for filters
 const selectedRegion = ref<string | null>(null);
 const selectedRole = ref<string | null>(null);
 
-const regions = ref(["North", "South", "East", "West"]); // Example regions
-const roles = ref(["Account Manager", "Senior Sales", "Support"]); // Example roles
+const regions = ref(["North", "Europe", "Asia-Pacific", "Middle East", "South America"]);
+const roles = ref(["Account Manager", "Senior Sales Executive", "Regional Sales Manager"]);
 
-// Generate params dynamically as a computed property
 const params = computed(() => pickBy({
   page: 1,
   limit: 10,
@@ -20,16 +18,8 @@ const params = computed(() => pickBy({
   role: selectedRole.value,
 }));
 
-// Fetch data with cleaned params
 const { data: responseData, isLoading, isError, error, refetch } = useGetSalesReps(params);
 
-// Watch params to trigger fetch whenever the filter changes
-watchEffect(() => {
-  console.log("Fetching data with params:", params.value);
-  refetch(); // Automatically fetch when params change
-});
-
-// Map and clean up sales reps data
 const data = computed(() => {
   const salesReps = get(responseData.value, "data.data.salesReps", []);
   return salesReps.map((rep: any) => ({
@@ -57,6 +47,11 @@ const handleRoleChange = (value: string) => {
 const handleRegionChange = (value: string) => {
   selectedRegion.value = value === "all" ? null : value;
 };
+
+const resetFilters = () => {
+  selectedRegion.value = null;
+  selectedRole.value = null;
+};
 </script>
 
 <template>
@@ -69,7 +64,7 @@ const handleRegionChange = (value: string) => {
     </header>
 
     <!-- Filters -->
-    <div class="flex gap-4">
+    <div class="flex gap-4 items-center">
       <!-- Filter by Region -->
       <DropdownMenu>
         <DropdownMenuTrigger class="border p-2 rounded cursor-pointer">
@@ -105,6 +100,15 @@ const handleRegionChange = (value: string) => {
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
+
+      <!-- Reset Button -->
+      <button
+        class="ml-auto flex items-center gap-2 border p-2 rounded bg-gray-100 hover:bg-gray-200"
+        @click="resetFilters"
+      >
+        <span>Reset</span>
+        <Icon name="mdi-refresh" class="h-5 w-5" />
+      </button>
     </div>
 
     <!-- Tampilkan status loading, error, atau tabel data -->
