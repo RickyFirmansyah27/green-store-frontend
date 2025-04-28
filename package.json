@@ -11,9 +11,13 @@
   },
   "dependencies": {
     "@nuxtjs/tailwindcss": "^6.14.0",
+    "@tanstack/vue-query": "^5.74.7",
     "@tanstack/vue-table": "^8.21.3",
+    "@types/lodash": "^4.17.16",
+    "axios": "^1.9.0",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
+    "lodash": "^4.17.21",
     "nuxt": "^3.16.2",
     "nuxt-highcharts": "^3.1.1",
     "nuxt-icon": "^1.0.0-beta.7",
