@@ -1,4 +1,5 @@
 const animate = require("tailwindcss-animate")
+const { blackA, grass } = require('@radix-ui/colors')
 
 /** @type {import('tailwindcss').Config} */
 module.exports = {
@@ -15,6 +16,8 @@ module.exports = {
     },
     extend: {
       colors: {
+        ...blackA,
+        ...grass,
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
