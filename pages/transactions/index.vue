@@ -3,8 +3,10 @@ import { ref, computed, watch } from "vue";
 import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator } from '@/components/ui/dropdown-menu';
 import { Pagination } from '@/components/ui/pagination';
 import { useGetSalesReps } from "@/lib/transaction-service";
-import { get, pickBy } from "lodash";
+import lodash from "lodash";
+const { get, pickBy } = lodash;
 import { column_data_sales_transaction } from "./constant";
+
 
 
 const selectedRegion = ref<string | null>(null);
