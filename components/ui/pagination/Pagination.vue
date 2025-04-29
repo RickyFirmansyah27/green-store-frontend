@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { ref, watch } from "vue";
 import { Icon } from "@iconify/vue";
 import {
   PaginationEllipsis,
@@ -17,40 +16,36 @@ const props = defineProps({
     type: Number,
     required: true,
   },
+  total: {
+    type: Number,
+    required: true,
+  },
+  siblingCount: {
+    type: Number,
+    default: 1,
+  },
 });
 
 const emit = defineEmits(["page-change"]);
-
-const currentPage = ref(props.page); // Sinkronkan dengan properti page
-watch(
-  () => props.page,
-  (newPage) => {
-    currentPage.value = newPage;
-  }
-);
-
-watch(currentPage, (newPage) => {
-  emit("page-change", newPage);
-});
 </script>
 
 <template>
   <PaginationRoot
-    :total="100"
-    :sibling-count="1"
+    :total="props.total"
+    :sibling-count="props.siblingCount"
     show-edges
-    :page="currentPage" 
+    :page="props.page"
   >
     <PaginationList v-slot="{ items }" class="flex items-center gap-1 text-black">
       <PaginationFirst
         class="w-9 h-9 flex items-center justify-center disabled:opacity-50 focus-within:outline focus-within:outline-1 focus-within:outline-offset-1 rounded bg-black text-white hover:bg-gray-800"
-        @click="currentPage = 1"
+        @click="$emit('page-change', 1)"
       >
         <Icon icon="radix-icons:double-arrow-left" />
       </PaginationFirst>
       <PaginationPrev
         class="w-9 h-9 flex items-center justify-center mr-4 disabled:opacity-50 focus-within:outline focus-within:outline-1 focus-within:outline-offset-1 rounded bg-black text-white hover:bg-gray-800"
-        @click="currentPage = Math.max(1, currentPage - 1)"
+        @click="$emit('page-change', Math.max(1, props.page - 1))"
       >
         <Icon icon="radix-icons:chevron-left" />
       </PaginationPrev>
@@ -59,7 +54,7 @@ watch(currentPage, (newPage) => {
           v-if="page.type === 'page'"
           :value="page.value"
           class="w-9 h-9 border rounded bg-black text-white data-[selected]:bg-white data-[selected]:text-black hover:bg-gray-800 transition focus-within:outline focus-within:outline-1 focus-within:outline-offset-1"
-          @click="currentPage = page.value"
+          @click="$emit('page-change', page.value)"
         >
           {{ page.value }}
         </PaginationListItem>
@@ -73,13 +68,13 @@ watch(currentPage, (newPage) => {
       </template>
       <PaginationNext
         class="w-9 h-9 flex items-center justify-center ml-4 disabled:opacity-50 focus-within:outline focus-within:outline-1 focus-within:outline-offset-1 rounded bg-black text-white hover:bg-gray-800"
-        @click="currentPage = Math.min(100, currentPage + 1)"
+        @click="$emit('page-change', Math.min(props.total, props.page + 1))"
       >
         <Icon icon="radix-icons:chevron-right" />
       </PaginationNext>
       <PaginationLast
         class="w-9 h-9 flex items-center justify-center disabled:opacity-50 focus-within:outline focus-within:outline-1 focus-within:outline-offset-1 rounded bg-black text-white hover:bg-gray-800"
-        @click="currentPage = 100"
+        @click="$emit('page-change', props.total)"
       >
         <Icon icon="radix-icons:double-arrow-right" />
       </PaginationLast>

@@ -13,11 +13,11 @@ const selectedRole = ref<string | null>(null);
 const regions = ref(["North", "Europe", "Asia-Pacific", "Middle East", "South America"]);
 const roles = ref(["Account Manager", "Senior Sales Executive", "Regional Sales Manager"]);
 
-const currentPage = ref(1); // Variabel reaktif untuk melacak halaman saat ini
-const limit = ref(10); // Variabel untuk batas data per halaman
+const currentPage = ref(1);
+const limit = ref(10);
 
 const params = computed(() => pickBy({
-  page: currentPage.value, // Gunakan currentPage di sini
+  page: currentPage.value,
   limit: limit.value,
   region: selectedRegion.value,
   role: selectedRole.value,
@@ -51,18 +51,18 @@ const columns = computed(() => {
 
 const handleRoleChange = (value: string) => {
   selectedRole.value = value === "all" ? null : value;
-  currentPage.value = 1; // Reset halaman ke 1 saat filter diubah
+  currentPage.value = 1;
 };
 
 const handleRegionChange = (value: string) => {
   selectedRegion.value = value === "all" ? null : value;
-  currentPage.value = 1; // Reset halaman ke 1 saat filter diubah
+  currentPage.value = 1;
 };
 
 const resetFilters = () => {
   selectedRegion.value = null;
   selectedRole.value = null;
-  currentPage.value = 1; // Reset halaman ke 1 saat filter direset
+  currentPage.value = 1;
 };
 
 const handlePageChange = (page: number) => {
@@ -119,10 +119,10 @@ const handlePageChange = (page: number) => {
     <div class="flex justify-between items-center mt-4">
       <p>Total: {{ totalData || 0 }}</p>
       <Pagination
-        :page="currentPage.value"
+        :page="currentPage"
         :total=totalData
-        :limit="limit.value"
-        @page-change="(page) => handlePageChange(page)" 
+        :limit="limit"
+        @page-change="handlePageChange"
       />
     </div>
   </div>
