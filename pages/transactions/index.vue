@@ -122,7 +122,7 @@ const handlePageChange = (page: number) => {
       <p>Total: {{ totalData || 0 }}</p>
       <Pagination
         :page="currentPage"
-        :total=totalData
+        :total=100
         :limit="limit"
         @page-change="handlePageChange"
       />

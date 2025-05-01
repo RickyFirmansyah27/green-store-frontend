@@ -14,7 +14,7 @@ const items = ref([
     icon: "lucide:bolt"
   }, {
     title: "Contacts",
-    path: "/",
+    path: "/contacts",
     icon: "lucide:square-user-round"
   }
 ])
