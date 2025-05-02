@@ -5,9 +5,15 @@
 </template>
 
 <script setup>
-const auth = useAuth()
+import { useRouter } from 'vue-router'
+import { onMounted, ref } from 'vue'
 
+const auth = useAuth()
+const router = useRouter()
 onMounted(() => {
-  auth.checkAuth()
+  const isAuthenticated = auth.checkAuth()
+  if (!isAuthenticated) {
+    router.push('/login')
+  }
 })
 </script>

@@ -1,4 +1,5 @@
 import { useRouter } from 'vue-router'
+import { ref } from 'vue'
 
 export const useAuth = () => {
   const router = useRouter()
@@ -37,8 +38,11 @@ export const useAuth = () => {
     if (storedToken) {
       token.value = storedToken
       user.value = { id: 1, email: 'owner@gmail.com', name: 'Admin User' }
+      return true
     }
+    return false
   }
+  
 
   const register = async (name: string, email: string, password: string) => {
     try {
