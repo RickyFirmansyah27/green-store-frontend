@@ -17,6 +17,18 @@ export default defineNuxtConfig({
      */
     componentDir: './components/ui'
   },
+  components: {
+    dirs: [
+      {
+        path: '~/components',
+        priority: 2  // Higher priority
+      },
+      {
+        path: '~/components/ui',
+        priority: 1  // Lower priority
+      }
+    ]
+  },
 
   compatibilityDate: '2025-04-25'
 })
