@@ -40,11 +40,25 @@ export const useAuth = () => {
     }
   }
 
+  const register = async (name: string, email: string, password: string) => {
+    try {
+      if (email && password) {
+        await new Promise(resolve => setTimeout(resolve, 1000))
+        return true
+      }
+      return false
+    } catch (error) {
+      console.error('Registration error:', error)
+      return false
+    }
+  }
+
   return {
     token,
     user,
     login,
     logout,
-    checkAuth
+    checkAuth,
+    register
   }
 }

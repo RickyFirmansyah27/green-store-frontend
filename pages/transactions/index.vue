@@ -52,12 +52,14 @@ const columns = computed(() => {
 });
 
 const handleRoleChange = (value: string) => {
-  selectedRole.value = value === "all" ? null : value;
+  selectedRole.value = value === "all" ? '' : value;
+  selectedRegion.value = '';
   currentPage.value = 1;
 };
 
 const handleRegionChange = (value: string) => {
-  selectedRegion.value = value === "all" ? null : value;
+  selectedRole.value = '';
+  selectedRegion.value = value === "all" ? '' : value;
   currentPage.value = 1;
 };
 
@@ -122,7 +124,7 @@ const handlePageChange = (page: number) => {
       <p>Total: {{ totalData || 0 }}</p>
       <Pagination
         :page="currentPage"
-        :total=100
+        :total="totalData"
         :limit="limit"
         @page-change="handlePageChange"
       />
