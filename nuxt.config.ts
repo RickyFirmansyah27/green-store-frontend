@@ -1,6 +1,11 @@
 export default defineNuxtConfig({
   modules: ['@nuxtjs/tailwindcss', 'shadcn-nuxt', 'nuxt-icon', 'nuxt-highcharts'],
-
+  css: [
+    'vue3-toastify/dist/index.css'
+  ],
+  plugins: [
+    { src: '~/plugins/toast.client.ts', mode: 'client' }
+  ],
   shadcn: {
     /**
      * Prefix for all the imported component

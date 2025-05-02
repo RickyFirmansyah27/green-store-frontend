@@ -9,14 +9,15 @@ const items = ref([
     path: "/transactions",
     icon: "lucide:arrow-left-right"
   }, {
-    title: "Account",
-    path: "/",
-    icon: "lucide:bolt"
-  }, {
     title: "Contacts",
     path: "/contacts",
     icon: "lucide:square-user-round"
-  }
+  },
+  {
+    title: "Setting",
+    path: "/settings",
+    icon: "lucide:bolt"
+  }, 
 ])
 </script>
 

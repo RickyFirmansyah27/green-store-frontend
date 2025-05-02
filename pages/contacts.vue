@@ -181,7 +181,7 @@ const filteredContacts = computed(() => {
   </div>
 </template>
 
-<style scoped>
+<style lang="postcss" scoped>
 .table-container {
   @apply border rounded-lg overflow-hidden;
 }
