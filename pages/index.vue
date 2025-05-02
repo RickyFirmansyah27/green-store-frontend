@@ -1,5 +1,11 @@
 <script setup>
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Card } from '@/components/ui/card'
+import { Button } from '@/components/ui/button'
+import { useAuth } from '@/composables/useAuth'
+import { toast } from 'vue3-toastify'
+
+const auth = useAuth()
 const loading = ref(false)
 let data = ref([])
 const list = [
@@ -61,6 +67,31 @@ const cards = [
   }
 ]
 
+const handleLogout = async () => {
+  try {
+    loading.value = true
+    
+    await new Promise((resolve) => {
+      toast.success('Logout berhasil!', {
+        autoClose: 1000,
+        position: 'bottom-right',
+        onClose: resolve
+      })
+    })
+
+    await auth.logout()
+    
+  } catch (error) {
+    toast.error('Gagal logout', {
+      autoClose: 1000,
+      position: 'bottom-right'
+    })
+    console.error('Logout error:', error)
+  } finally {
+    loading.value = false
+  }
+}
+
 onMounted(() => {
   generateRandomValue(24);
 })
@@ -73,7 +104,21 @@ onMounted(() => {
         <p>Hi, welcome back !</p>
         <h1>Dashboard</h1>
       </div>
-      <ProductNew />
+      <div class="flex items-center gap-2">
+        <Button 
+          variant="outline" 
+          size="sm" 
+          class="hidden lg:inline-flex"
+          :disabled="loading"
+          @click="handleLogout"
+        >
+          <span v-if="loading" class="flex items-center gap-2">
+            <Icon name="ph:circle-notch" class="h-4 w-4 animate-spin" />
+            Loading...
+          </span>
+          <span v-else>Logout</span>
+        </Button>
+      </div>
     </header>
     <main class="grid w-full gap-4">
       <Tabs default-value="Today" class="w-full" @click="setCategory">

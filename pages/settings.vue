@@ -67,12 +67,10 @@ import { toast } from 'vue3-toastify';
 import 'vue3-toastify/dist/index.css';
 import 'vue3-toastify/dist/index.css'
 
-// State
 const companyName = ref('')
 const autoSave = ref(false)
 const darkMode = ref(false)
 
-// Methods
 const toggleDarkMode = () => {
   darkMode.value = !darkMode.value
   document.documentElement.classList.toggle('dark')
@@ -81,7 +79,6 @@ const toggleDarkMode = () => {
 
 const saveSettings = () => {
   try {
-    // Save settings logic here
     const settings = {
       companyName: companyName.value,
       autoSave: autoSave.value,
@@ -102,7 +99,6 @@ const saveSettings = () => {
   }
 }
 
-// Initialize settings from localStorage
 onMounted(() => {
   try {
     const savedSettings = localStorage.getItem('settings')

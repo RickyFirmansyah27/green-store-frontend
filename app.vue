@@ -3,3 +3,11 @@
     <NuxtPage />
   </NuxtLayout>
 </template>
+
+<script setup>
+const auth = useAuth()
+
+onMounted(() => {
+  auth.checkAuth()
+})
+</script>
