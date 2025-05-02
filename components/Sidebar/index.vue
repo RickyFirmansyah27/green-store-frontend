@@ -1,4 +1,5 @@
 <script setup>
+import { AvatarFallback, AvatarRoot } from 'radix-vue';
 const open = ref(true);
 const name = "ricky-firmansyah.site";
 </script>
@@ -28,19 +29,16 @@ const name = "ricky-firmansyah.site";
     </div>
     <div class="hidden lg:flex w-[250px] min-h-screen flex-col justify-between border-r">
       <SidebarMenu />
+
       <div class="p-4">
-        <div class="flex items-center gap-2 text-black cursor-pointer hover:bg-neutral-50 rounded p-2">
-          <div class="bg-green-300 h-10 w-10 rounded-full flex items-center justify-center font-bold text-white">
-            {{ name[0] }}
-          </div>
-          <a 
-            href="https://ricky-firmansyah.site" 
-            target="_blank" 
-            class="text-black text-sm font-bold hover:underline"
-          >
-            {{ name }}
-          </a>
-        </div>
+        <a :href="`https://${name}`" target="_blank" rel="noopener noreferrer" class="flex items-center gap-3">
+          <AvatarRoot class="bg-blackA3 inline-flex h-[45px] w-[45px] select-none items-center justify-center overflow-hidden rounded-full align-middle cursor-pointer hover:opacity-80 transition-opacity">
+            <AvatarFallback class="text-black leading-1 flex h-full w-full items-center justify-center bg-green-200 text-[15px] font-medium">
+              RF
+            </AvatarFallback>
+          </AvatarRoot>
+          <span class="text-sm font-medium">Ricky Firmansyah</span>
+        </a>
       </div>
     </div>
   </div>
