@@ -88,7 +88,7 @@ const handlePageChange = (page: number) => {
         <DropdownMenuTrigger class="border p-2 rounded cursor-pointer">
           {{ selectedRegion || "Filter by Region" }}
         </DropdownMenuTrigger>
-        <DropdownMenuContent class="bg-white border rounded shadow-md">
+        <DropdownMenuContent class="bg-white border rounded shadow-md hover:bg-gray-100 dark:bg-gray-800 dark:hover:bg-gray-700 dark:border-gray-600">
           <DropdownMenuItem @click="() => handleRegionChange('all')">All Regions</DropdownMenuItem>
           <DropdownMenuSeparator />
           <DropdownMenuItem v-for="region in regions" :key="region" @click="() => handleRegionChange(region)">
@@ -101,7 +101,7 @@ const handlePageChange = (page: number) => {
         <DropdownMenuTrigger class="border p-2 rounded cursor-pointer">
           {{ selectedRole || "Filter by Role" }}
         </DropdownMenuTrigger>
-        <DropdownMenuContent class="bg-white border rounded shadow-md">
+        <DropdownMenuContent class="bg-white border rounded shadow-md hover:bg-gray-100 dark:bg-gray-800 dark:hover:bg-gray-700 dark:border-gray-600">
           <DropdownMenuItem @click="() => handleRoleChange('all')">All Roles</DropdownMenuItem>
           <DropdownMenuSeparator />
           <DropdownMenuItem v-for="role in roles" :key="role" @click="() => handleRoleChange(role)">
@@ -110,11 +110,12 @@ const handlePageChange = (page: number) => {
         </DropdownMenuContent>
       </DropdownMenu>
 
-      <button class="ml-auto flex items-center gap-2 border p-2 rounded bg-gray-100 hover:bg-gray-200"
+      <button class="ml-auto flex items-center gap-2 border p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-700 dark:border-gray-600" 
         @click="resetFilters">
         <span>Reset</span>
         <Icon name="mdi-refresh" class="h-5 w-5" />
       </button>
+      
     </div>
 
     <div v-if="isLoading">Loading...</div>

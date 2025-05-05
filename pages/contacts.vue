@@ -86,26 +86,26 @@ const filteredContacts = computed(() => {
           </DialogTrigger>
           <DialogPortal>
             <DialogOverlay class="fixed inset-0 bg-black/50" />
-            <DialogContent class="fixed left-[50%] top-[50%] translate-x-[-50%] translate-y-[-50%] bg-white rounded-lg shadow-lg w-[95%] max-w-[500px] p-6 md:p-8">
-              <DialogTitle class="text-lg md:text-xl font-bold mb-4">
+            <DialogContent class="fixed left-[50%] top-[50%] translate-x-[-50%] translate-y-[-50%] bg-white dark:bg-gray-800 rounded-lg shadow-lg w-[95%] max-w-[500px] p-6 md:p-8">
+              <DialogTitle class="text-lg md:text-xl font-bold mb-4 dark:text-white">
                 {{ editingContact ? 'Edit Contact' : 'Add Contact' }}
               </DialogTitle>
               <form @submit.prevent="handleSubmit" class="grid gap-4">
                 <div class="grid gap-2">
-                  <label class="font-medium">Name</label>
+                  <label class="font-medium dark:text-gray-200">Name</label>
                   <Input v-model="formData.name" required />
                 </div>
                 <div class="grid gap-2">
-                  <label class="font-medium">Email</label>
+                  <label class="font-medium dark:text-gray-200">Email</label>
                   <Input v-model="formData.email" type="email" required />
                 </div>
                 <div class="grid gap-2">
-                  <label class="font-medium">Phone</label>
+                  <label class="font-medium dark:text-gray-200">Phone</label>
                   <Input v-model="formData.phone" required />
                 </div>
                 <div class="grid gap-2">
-                  <label class="font-medium">Status</label>
-                  <select v-model="formData.status" class="w-full p-2 border rounded">
+                  <label class="font-medium dark:text-gray-200">Status</label>
+                  <select v-model="formData.status" class="w-full p-2 border rounded dark:bg-gray-700 dark:border-gray-600 dark:text-white">
                     <option value="Active">Active</option>
                     <option value="Inactive">Inactive</option>
                   </select>

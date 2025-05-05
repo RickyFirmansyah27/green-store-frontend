@@ -2,33 +2,93 @@
 let props = defineProps(['currentCategory', 'data']);
 let data = props.data || [];
 let currentCategory = props.currentCategory || 'today';
+const isDarkMode = ref(false);
 
-// Kategori data untuk sumbu X
+onMounted(() => {
+  checkDarkMode();
+  
+  const observer = new MutationObserver(() => {
+    checkDarkMode();
+  });
+  
+  observer.observe(document.documentElement, {
+    attributes: true,
+    attributeFilter: ['class']
+  });
+});
+
+const checkDarkMode = () => {
+  isDarkMode.value = document.documentElement.classList.contains('dark');
+};
+
 let categories = ref({
   today: Array.from({ length: 24 }, (_, i) => `${i.toString().padStart(2, '0')}:00`),
   week: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
   year: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
 });
 
-// Konfigurasi chart
 let options = computed(() => ({
-  chart: { type: 'line', animation: { enabled: false } },
+  chart: {
+    type: 'line',
+    animation: { enabled: false },
+    backgroundColor: 'transparent',
+    style: {
+      fontFamily: 'inherit'
+    }
+  },
   title: { text: '' },
-  xAxis: { gridLineColor: 'transparent', categories: categories.value[currentCategory] },
-  yAxis: { gridLineColor: 'transparent', title: { text: '' } },
+  xAxis: {
+    categories: categories.value[currentCategory],
+    gridLineWidth: isDarkMode.value ? 1 : 0,
+    gridLineColor: isDarkMode.value ? '#333333' : '#e5e5e5',
+    lineColor: isDarkMode.value ? '#666666' : '#e5e5e5',
+    labels: {
+      style: {
+        color: isDarkMode.value ? '#ffffff' : '#666666'
+      }
+    }
+  },
+  yAxis: {
+    gridLineWidth: isDarkMode.value ? 1 : 0,
+    gridLineColor: isDarkMode.value ? '#333333' : '#e5e5e5',
+    lineColor: isDarkMode.value ? '#666666' : '#e5e5e5',
+    title: { text: '' },
+    labels: {
+      style: {
+        color: isDarkMode.value ? '#ffffff' : '#666666'
+      }
+    }
+  },
   legend: { enabled: false },
   plotOptions: {
     line: {
-      marker: { enabled: false },
+      marker: {
+        enabled: isDarkMode.value,
+        radius: 4,
+        symbol: 'circle'
+      },
       dataLabels: { enabled: false },
-      enableMouseTracking: false
+      enableMouseTracking: true,
+      states: {
+        hover: {
+          lineWidth: 5
+        }
+      }
     }
   },
+  tooltip: {
+    backgroundColor: isDarkMode.value ? 'rgba(30, 30, 30, 0.9)' : 'rgba(255, 255, 255, 0.9)',
+    style: {
+      color: isDarkMode.value ? '#ffffff' : '#333333'
+    },
+    borderWidth: 0,
+    shadow: false
+  },
   series: [{
-    name: 'line',
-    lineWidth: 4,
+    name: 'Value',
+    lineWidth: 3,
     color: {
-      linearGradient: { y1: 0, y2: 0, y3: 0, y4: 0 },
+      linearGradient: { x1: 0, y1: 0, x2: 1, y2: 0 },
       stops: [
         [0, 'rgba(252,176,69,1)'],
         [0.33, 'rgba(253,29,29,1)'],
@@ -40,7 +100,6 @@ let options = computed(() => ({
   }]
 }));
 
-// Fungsi untuk menghasilkan tanggal dalam bulan
 function generateMonth() {
   let currentDate = new Date();
   let currentMonth = currentDate.getMonth() + 1;
@@ -54,7 +113,6 @@ function generateMonth() {
   categories.value = { ...categories.value, month: monthDates };
 }
 
-// Generate data bulan saat komponen dimuat
 onMounted(() => {
   generateMonth();
 });
