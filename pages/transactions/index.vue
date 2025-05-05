@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { ref, computed } from "vue";
+import { ref, computed, watch } from "vue";
+import { toast } from 'vue3-toastify';
 import { Pagination } from '@/components/ui/pagination';
 import AdvanceFilter from "./DialogFilter.vue";
 import { useGetSalesReps } from "@/lib/transaction-service";
@@ -92,6 +93,19 @@ const applyFilters = () => {
   currentPage.value = 1
   showFilterModal.value = false
 }
+
+// Add a watch effect for error state
+watch(() => isError.value, (newValue) => {
+  if (newValue && error.value) {
+    toast.error(error.value instanceof Error ? error.value.message : String(error.value), {
+      position: toast.POSITION.TOP_RIGHT,
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+    });
+  }
+});
 </script>
 
 <template>
@@ -119,8 +133,15 @@ const applyFilters = () => {
       </button>
     </div>
 
-    <div v-if="isLoading">Loading...</div>
-    <div v-else-if="isError">Error: {{ error }}</div>
+    <div v-if="isLoading" class="relative h-[400px] w-full bg-white/80 dark:bg-gray-900/80 rounded-lg">
+      <div class="absolute top-1/2 left-[50%] transform -translate-x-1/2 -translate-y-1/2">
+        <div class="w-8 h-8 border-4 border-green-500 border-t-transparent rounded-full animate-spin"></div>
+      </div>
+    </div>
+    <div v-else-if="!data.length || isError" class="flex flex-col items-center justify-center h-[400px] bg-white dark:bg-gray-900 rounded-lg">
+      <Icon name="mdi-database-off-outline" class="w-12 h-12 text-gray-400 mb-2" />
+      <p class="text-gray-500 dark:text-gray-400">No data available</p>
+    </div>
     <DataTable v-else :columns="columns" :data="data" />
     <div class="flex justify-between items-center mt-4">
       <p>Total: {{ totalData || 0 }}</p>
