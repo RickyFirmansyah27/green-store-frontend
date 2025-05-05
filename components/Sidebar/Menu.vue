@@ -25,7 +25,7 @@ const items = ref([
   <div>
     <header class="flex items-center gap-2 p-4 hover:scale-[101%] transition cursor-pointer">
       <Logo />
-      <p class="font-bold text-black">Green Store</p>
+      <p class="font-bold text-black dark:text-white">Green Store</p>
     </header>
     <div class="px-4 grow">
       <div class="grid gap-2">
