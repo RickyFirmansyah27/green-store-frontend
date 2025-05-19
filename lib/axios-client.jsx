@@ -16,11 +16,21 @@ const makeCallApi = ({
 
   callApi.interceptors.request.use(
     (config) => {
-      config.headers = {
-        ...config.headers,
-        "Content-Type": "application/json",
-        ...headers,
-      };
+      if (config.headers && typeof config.headers.set === 'function') {
+        config.headers.set("Content-Type", "application/json");
+
+        for (const [key, value] of Object.entries(headers)) {
+          config.headers.set(key, value);
+        }
+      } else {
+        // fallback, jika config.headers belum berbentuk AxiosHeaders
+        config.headers = {
+          ...config.headers,
+          "Content-Type": "application/json",
+          ...headers,
+        };
+      }
+
       return config;
     },
     (error) => Promise.reject(error),
